@@ -49,10 +49,19 @@ photoAlbumModel.set("message", "Add new photos");
 
 Object.defineProperty(photoAlbumModel, "photoItems", {
     get: function () {
+
+        everlive.Files.get()
+            .then(function (data) {
+                alert(data.result.length) // RETURNS 69 RECORDS
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            });
+
         everlive.Files.get()
             .then(function (data) {
                 data.result.forEach(function (fileMetadata) {
-                    alert(data.result.length);
+                    
                     imageSourceModule.fromUrl(fileMetadata.Uri).then(function (result) {
                         var item = {
                             itemImage: result
